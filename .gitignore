@@ -1,0 +1,8 @@
+*.o
+*.so
+.Rhistory
+.Rproj.user
+*.Rproj
+.Rbuildignore
+.RData
+.Rhistory
