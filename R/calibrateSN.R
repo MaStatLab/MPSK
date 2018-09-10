@@ -7,8 +7,8 @@ Calibrate <- function(x)
 {
   C = x$data$C - 1
   Z = x$chain$t - 1
-  ns  = dim(res$chain$S)[3]
-  K = dim(res$chain$S)[2]
+  ns  = dim(x$chain$S)[3]
+  K = dim(x$chain$S)[2]
 
   S = matrix(0, nrow=ns, ncol=K)
   for (i in 1:ns) {
