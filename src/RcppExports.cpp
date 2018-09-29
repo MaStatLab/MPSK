@@ -7,9 +7,31 @@
 
 using namespace Rcpp;
 
+// hungarian_cc
+arma::umat hungarian_cc(arma::mat cost);
+RcppExport SEXP _MPSK_hungarian_cc(SEXP costSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type cost(costSEXP);
+    rcpp_result_gen = Rcpp::wrap(hungarian_cc(cost));
+    return rcpp_result_gen;
+END_RCPP
+}
+// relabel
+Rcpp::List relabel(const Rcpp::List res);
+RcppExport SEXP _MPSK_relabel(SEXP resSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::List >::type res(resSEXP);
+    rcpp_result_gen = Rcpp::wrap(relabel(res));
+    return rcpp_result_gen;
+END_RCPP
+}
 // calib
 Rcpp::List calib(arma::mat Y, arma::vec C, arma::mat Z, NumericVector mu_input, IntegerVector mu_dim, NumericVector mu0_input, IntegerVector mu0_dim, arma::mat S);
-RcppExport SEXP _SMPK_calib(SEXP YSEXP, SEXP CSEXP, SEXP ZSEXP, SEXP mu_inputSEXP, SEXP mu_dimSEXP, SEXP mu0_inputSEXP, SEXP mu0_dimSEXP, SEXP SSEXP) {
+RcppExport SEXP _MPSK_calib(SEXP YSEXP, SEXP CSEXP, SEXP ZSEXP, SEXP mu_inputSEXP, SEXP mu_dimSEXP, SEXP mu0_inputSEXP, SEXP mu0_dimSEXP, SEXP SSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -27,7 +49,7 @@ END_RCPP
 }
 // perturbedSNcpp
 Rcpp::List perturbedSNcpp(arma::mat Y, arma::uvec C, Rcpp::List prior, Rcpp::List pmc, Rcpp::List state);
-RcppExport SEXP _SMPK_perturbedSNcpp(SEXP YSEXP, SEXP CSEXP, SEXP priorSEXP, SEXP pmcSEXP, SEXP stateSEXP) {
+RcppExport SEXP _MPSK_perturbedSNcpp(SEXP YSEXP, SEXP CSEXP, SEXP priorSEXP, SEXP pmcSEXP, SEXP stateSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -42,12 +64,14 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_SMPK_calib", (DL_FUNC) &_SMPK_calib, 8},
-    {"_SMPK_perturbedSNcpp", (DL_FUNC) &_SMPK_perturbedSNcpp, 5},
+    {"_MPSK_hungarian_cc", (DL_FUNC) &_MPSK_hungarian_cc, 1},
+    {"_MPSK_relabel", (DL_FUNC) &_MPSK_relabel, 1},
+    {"_MPSK_calib", (DL_FUNC) &_MPSK_calib, 8},
+    {"_MPSK_perturbedSNcpp", (DL_FUNC) &_MPSK_perturbedSNcpp, 5},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_SMPK(DllInfo *dll) {
+RcppExport void R_init_MPSK(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

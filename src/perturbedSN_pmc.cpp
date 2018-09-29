@@ -36,7 +36,7 @@ PMC::PMC(arma::mat Y,
   saveE.set_size(p, K*p, length_chain);
   savePsi.set_size(p, K, length_chain);
   saveG.set_size(p, K*p, length_chain);
-  saveS.set_size(num_particles, K, length_chain);
+  saveS.set_size(length_chain, K);
   saveVarphi.set_size(length_chain);
   saveOmega.set_size(p, K*p, length_chain);
   saveAlpha.set_size(p, K, length_chain);
@@ -174,6 +174,12 @@ void PMC::main_loop(Rcpp::List state, Rcpp::List prior) {
                 // cout << "N after" << N << endl;
                 T(find(T==kk)).fill(k);
                 // cout << "merged" << endl;
+                if( (it+1 > num_burnin) && ((it+1) % num_thin == 0)) {
+                  cout << "Merged clusters after burn-in period (iteration " << it+1 << "). Consider longer burn-in." << endl;
+                } else {
+                  cout << "Merged clusters (iteration " << it+1 << ")" << endl;
+                }
+
 
                 // List tempSMuSigma = PriorSMuSigma(   varphi,
                 //                                      Sigma_1,
@@ -266,7 +272,7 @@ void PMC::main_loop(Rcpp::List state, Rcpp::List prior) {
       saveG.slice(km) = reshape( mat(G.memptr(), G.n_elem, 1, false), p, K*p);
       saveE.slice(km) = reshape( mat(E.memptr(), E.n_elem, 1, false), p, K*p);
       saveLog_py.row(km) = log_py.t();
-      saveS.slice(km) = S;
+      saveS.row(km) = (sum(S,0)>K/2);
       saveVarphi(km) = mean( varphi );
       saveA0(km) = a0;
       savePerplexity.row(km) = perplexity.t();

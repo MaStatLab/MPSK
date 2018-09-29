@@ -7,10 +7,10 @@
 #' @param prior A list giving the prior information. If unspecified, a default prior is used.
 #' The list includes the following hyparameters:
 #' \code{K} Number of mixture components.
-#' \code{epsilon_range} Vector with minimum and maximum values for \code{epsilon}.
 #' \code{merge_step} Introduce step to merge mixture components with small KL divergence. Default is \code{merge_step = TRUE}.
 #' \code{merge_par} Parameter controlling merging radius. Default is \code{merge_par = 0.1}.
-smpk <- function(Y, C, prior = NULL, pmc = NULL, state = NULL)
+#' @export
+mpsk = function(Y, C, prior = NULL, pmc = NULL, state = NULL)
 {
   Y = as.matrix(Y)
   p = ncol(Y)
@@ -26,7 +26,7 @@ smpk <- function(Y, C, prior = NULL, pmc = NULL, state = NULL)
                      e0 = ncol(Y) + 2,
                      E0 = 0.1 * cov(Y),
                      merge_step = TRUE,
-                     merge_par = 0.1  )
+                     merge_par = 0.01  )
   } else {
     if(is.null(prior$K))
       prior$K = 10;
@@ -47,25 +47,23 @@ smpk <- function(Y, C, prior = NULL, pmc = NULL, state = NULL)
     if(is.null(prior$merge_step))
       prior$merge_step = TRUE;
     if(is.null(prior$merge_par))
-      prior$merge_par = 0.1;
+      prior$merge_par = 0.01;
   }
 
 
   if(is.null(pmc)) {
-    pmc = list(npart = 10, nburn = 250, nsave = 2000, nskip = 1, ndisplay = 50)
+    pmc = list(npart = 10, nburn = 2000, nsave = 500, nskip = 1, ndisplay = 50)
   } else {
     if(is.null(pmc$npart))
-      pmc$npart = 100
+      pmc$npart = 10
     if(is.null(pmc$nburn))
-      pmc$nburn = 5000
-    if(is.null(pmc$nburn))
-      pmc$nburn = 5000
+      pmc$nburn = 2000
     if(is.null(pmc$nsave))
-      pmc$nsave = 1000
+      pmc$nsave = 500
     if(is.null(pmc$nskip))
       pmc$nskip = 1
     if(is.null(pmc$ndisplay))
-      pmc$ndisplay = 100
+      pmc$ndisplay = 50
   }
 
   if(is.null(state$t)) {
@@ -84,7 +82,7 @@ smpk <- function(Y, C, prior = NULL, pmc = NULL, state = NULL)
   colnames(ans$data$Y) = colnames(Y)
   ans$data$C = ans$data$C + 1
   ans$chain$t = ans$chain$t + 1
-  class(ans) = "SMPK"
+  class(ans) = "MPSK"
   return(ans)
-
 }
+

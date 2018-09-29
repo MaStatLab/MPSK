@@ -1,5 +1,5 @@
-#ifndef GIBBS_H
-#define GIBBS_H
+#ifndef PMC_H
+#define PMC_H
 
 #include "RcppArmadillo.h"
 #include <omp.h>
@@ -32,7 +32,7 @@ private:
 
   /* --- storage --- */
   umat saveT;
-  ucube saveS;
+  umat saveS;
   mat saveZ;
   cube saveXi, saveXi0, savePsi, saveAlpha, saveW;
   cube saveG, saveOmega, saveE;
