@@ -46,8 +46,8 @@ Rcpp::List relabel(const Rcpp::List res)
   mat cost(K,K);
   umat permut;
   
-  // for (int s=0; s<(T-1); s++) {
-    for (int s=135; s<136; s++) {
+  for (int s=0; s<(T-1); s++) {
+    // for (int s=135; s<136; s++) {
     // cout << s << endl;
     urowvec currZ = t_relabel.row(s);
     int refClass, curClass;
