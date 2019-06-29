@@ -174,7 +174,8 @@ void find_prime_in_row (const int &row, int &col,
 void augment_path (const int &path_count, arma::umat &indM,
                    const arma::imat &path)
 {
-  for (unsigned int p = 0; p < path_count; ++p) {
+  // for (unsigned int p = 0; p < path_count; ++p) {
+  for (int p = 0; p < path_count; ++p) {
     if (indM.at(path(p, 0), path(p, 1)) == 1) {
       indM.at(path(p, 0), path(p, 1)) = 0;
     } else {

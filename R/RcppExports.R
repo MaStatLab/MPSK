@@ -5,15 +5,23 @@ hungarian_cc <- function(cost) {
     .Call(`_MPSK_hungarian_cc`, cost)
 }
 
+calib <- function(Y, C, Z, mu_input, mu_dim, mu0_input, mu0_dim) {
+    .Call(`_MPSK_calib`, Y, C, Z, mu_input, mu_dim, mu0_input, mu0_dim)
+}
+
+calibNoDist <- function(Y, C, Z, mu_input, mu_dim, mu0_input, mu0_dim) {
+    .Call(`_MPSK_calibNoDist`, Y, C, Z, mu_input, mu_dim, mu0_input, mu0_dim)
+}
+
+perturbedSNcpp <- function(Y, C, prior, pmc, state, initParticles, init) {
+    .Call(`_MPSK_perturbedSNcpp`, Y, C, prior, pmc, state, initParticles, init)
+}
+
+KL <- function(xi_1, xi_2, Omega_1, Omega_2, alpha_1, alpha_2) {
+    .Call(`_MPSK_KL`, xi_1, xi_2, Omega_1, Omega_2, alpha_1, alpha_2)
+}
+
 relabel <- function(res) {
     .Call(`_MPSK_relabel`, res)
-}
-
-calib <- function(Y, C, Z, mu_input, mu_dim, mu0_input, mu0_dim, S) {
-    .Call(`_MPSK_calib`, Y, C, Z, mu_input, mu_dim, mu0_input, mu0_dim, S)
-}
-
-perturbedSNcpp <- function(Y, C, prior, pmc, state) {
-    .Call(`_MPSK_perturbedSNcpp`, Y, C, prior, pmc, state)
 }
 

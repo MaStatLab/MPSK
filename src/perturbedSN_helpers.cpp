@@ -1,7 +1,12 @@
 #include <RcppArmadillo.h>
+#define NDEBUG 1
 // [[Rcpp::depends(RcppEigen)]]
 // [[Rcpp::depends(RcppNumerical)]]
 #include <RcppNumerical.h>
+
+// See 
+// https://github.com/RcppCore/RcppArmadillo/issues/116
+// for reason to include #define NDEBUG 1
 
 using namespace Numer;
 using namespace Rcpp;
@@ -35,6 +40,7 @@ double marginalLikeDirichlet(arma::uvec data, arma::vec alpha, bool logM = true)
 double rgammaBayes(double shape, double rate) 
 {
   return rgamma(1, shape, 1.0/rate )(0);
+  // return arma::randg<double>( distr_param(shape, 1.0/rate) );
 }
 
 double dBeta(double x, double a, double b, bool logD = true  )
@@ -78,7 +84,20 @@ arma::vec rDirichlet(arma::vec alpha, bool logR = true)
 arma::mat mvrnormArma(int n, arma::vec mu, arma::mat sigma) 
 {
   int ncols = sigma.n_cols;
-  arma::mat Y = arma::randn(n, ncols);
+  // arma::mat Y = arma::randn(n, ncols);
+  
+  // This is clumsy, but apparently reuiqred for reproducibility,
+  // when initializing with randn<mat>(num_particles, n_k) results 
+  // are not consistent across platforms. 
+  arma::mat Y(n, ncols);
+  for (int row=0; row<n; row++) {
+    for (int col=0; col<ncols; col++) {
+      Y(row,col) = randn();
+    }
+  }
+  // Rcout << "Y = arma::randn(n, ncols)" << Y(0,0) << endl;
+  
+  
   return arma::repmat(mu, 1, n).t() + Y * arma::chol(sigma);
 }
 
@@ -96,14 +115,14 @@ arma::vec dmsnArma(  arma::mat y,
                      arma::vec alpha,
                      bool logd = false) {
   int p = y.n_cols;
-  int m = y.n_rows;
+  // int m = y.n_rows;
   double logconst = log(2);
   
   mat Y = trans(y.each_row() - xi);
   vec Q = trans( sum( ( inv_sympd(omega) * Y ) % Y, 0) );
   vec L = trans(Y.each_col() / sqrt(omega.diag())) * alpha;
-  
-  vec logPDF = ( log( normcdf(L) ) - 0.5 * Q);
+
+  vec logPDF = ( log( arma::normcdf(L) ) - 0.5 * Q);
   logPDF += logconst;
   logPDF -= 0.5 * (p * log(2.0 * datum::pi) + log(det(omega)));
   
@@ -119,6 +138,7 @@ int sampling(vec probs)
   int v;
   Rcpp::NumericVector probsum(Kf);
   double x = R::runif(0.0, sum(probs));
+  // Rcout << "x = R::runif(0.0, sum(probs))=" << x << endl;
   probsum(0)=probs(0);
   for(int k = 1; k < Kf; k++)
   {  probsum(k)=probs(k)+probsum(k-1);
@@ -138,6 +158,7 @@ double ers_a_inf(double a) {
   double x, rho;
   do {
     x = -ainv * log(arma::randu<double>()) + a;
+    // Rcout << "log(arma::randu<double>())" << x << " ";
     rho = exp(-0.5 * pow((x - a), 2));
   } while (arma::randu<double>() > rho);
   return x;
@@ -211,11 +232,13 @@ uvec randsamp(int n, int min, int max) {
   uvec a(n);
   while (i--) {
     r = (max-min+1-i);
-    a[i] = min += (r ? rand()%r : 0);
+    // a[i] = min += (r ? randi()%r : 0);
+    a[i] = min += (r ? randi()%r : 0);
     min++;
   }
   while (n>1) {
-    r = a[i=rand()%n--];
+    // r = a[i=randi()%n--];
+    r = a[i=randi()%n--];
     a[i]=a[n];
     a[n]=r;
   }
@@ -226,17 +249,17 @@ uvec randsamp(int n, int min, int max) {
 class SNlog2Phi: public Func
 {
 private:
-  double xi; 
-  double om; 
+  double xi;
+  double om;
   double al;
 public:
   SNlog2Phi(double xi_, double om_, double al_) : xi(xi_), om(om_), al(al_) {}
-  
+
   double operator()(const double& x) const
   {
-    double SN = 2 * normpdf(1.0/(1.0-pow(x,2)), xi, sqrt(om)) * 
-                      normcdf(al/(1.0-pow(x,2)), xi, sqrt(om));
-    double g = log( 2 * normcdf(1.0/(1.0-pow(x,2))) );
+    double SN = 2 * arma::normpdf(1.0/(1.0-pow(x,2)), xi, sqrt(om)) *
+                      arma::normcdf(al/(1.0-pow(x,2)), xi, sqrt(om));
+    double g = log( 2 * arma::normcdf(1.0/(1.0-pow(x,2))) );
     double J = (1+pow(x,2))/pow((1.0-pow(x,2)),2);
     return SN * g * J;
   }
@@ -253,7 +276,8 @@ double Eint( double xi,
 
   return z;
 }
-  
+
+// [[Rcpp::export]]
 double KL(  arma::vec xi_1, 
             arma::vec xi_2, 
             arma::mat Omega_1, 

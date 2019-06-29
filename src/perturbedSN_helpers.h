@@ -62,5 +62,13 @@ double dIWishartArma(  arma::mat W,
                        bool logd = true);
 
 arma::uvec randsamp(int n, int min, int max);
-  
+
+// void armadillo_set_seed_random();
+// 
+// void armadillo_set_seed(unsigned int val);
+
+// void set_seed(unsigned int seed);
+
+// int rndndn();
+
 #endif

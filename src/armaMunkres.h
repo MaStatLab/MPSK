@@ -1,6 +1,5 @@
 // #ifndef MUNKRES_H_
 // #define MUNKRES_H_
-
 #include "RcppArmadillo.h"
 
 using namespace Rcpp;

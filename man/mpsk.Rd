@@ -2,7 +2,7 @@
 % Please edit documentation in R/mpsk.R
 \name{mpsk}
 \alias{mpsk}
-\title{Fit SMPK model}
+\title{This function generates a sample from the posterior of MPSK.}
 \usage{
 mpsk(Y, C, prior = NULL, pmc = NULL, state = NULL)
 }
@@ -18,5 +18,5 @@ The list includes the following hyparameters:
 \code{merge_par} Parameter controlling merging radius. Default is \code{merge_par = 0.1}.}
 }
 \description{
-This function generates a sample from the posterior of CREMID.
+This function generates a sample from the posterior of MPSK.
 }

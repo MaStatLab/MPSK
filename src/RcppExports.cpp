@@ -18,6 +18,73 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// calib
+Rcpp::List calib(arma::mat Y, arma::vec C, arma::mat Z, NumericVector mu_input, IntegerVector mu_dim, NumericVector mu0_input, IntegerVector mu0_dim);
+RcppExport SEXP _MPSK_calib(SEXP YSEXP, SEXP CSEXP, SEXP ZSEXP, SEXP mu_inputSEXP, SEXP mu_dimSEXP, SEXP mu0_inputSEXP, SEXP mu0_dimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type C(CSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu_input(mu_inputSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type mu_dim(mu_dimSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu0_input(mu0_inputSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type mu0_dim(mu0_dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(calib(Y, C, Z, mu_input, mu_dim, mu0_input, mu0_dim));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calibNoDist
+Rcpp::List calibNoDist(arma::mat Y, arma::vec C, arma::mat Z, NumericVector mu_input, IntegerVector mu_dim, NumericVector mu0_input, IntegerVector mu0_dim);
+RcppExport SEXP _MPSK_calibNoDist(SEXP YSEXP, SEXP CSEXP, SEXP ZSEXP, SEXP mu_inputSEXP, SEXP mu_dimSEXP, SEXP mu0_inputSEXP, SEXP mu0_dimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type C(CSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu_input(mu_inputSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type mu_dim(mu_dimSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu0_input(mu0_inputSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type mu0_dim(mu0_dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(calibNoDist(Y, C, Z, mu_input, mu_dim, mu0_input, mu0_dim));
+    return rcpp_result_gen;
+END_RCPP
+}
+// perturbedSNcpp
+Rcpp::List perturbedSNcpp(arma::mat Y, arma::uvec C, Rcpp::List prior, Rcpp::List pmc, Rcpp::List state, Rcpp::List initParticles, bool init);
+RcppExport SEXP _MPSK_perturbedSNcpp(SEXP YSEXP, SEXP CSEXP, SEXP priorSEXP, SEXP pmcSEXP, SEXP stateSEXP, SEXP initParticlesSEXP, SEXP initSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type C(CSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type prior(priorSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type pmc(pmcSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type state(stateSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type initParticles(initParticlesSEXP);
+    Rcpp::traits::input_parameter< bool >::type init(initSEXP);
+    rcpp_result_gen = Rcpp::wrap(perturbedSNcpp(Y, C, prior, pmc, state, initParticles, init));
+    return rcpp_result_gen;
+END_RCPP
+}
+// KL
+double KL(arma::vec xi_1, arma::vec xi_2, arma::mat Omega_1, arma::mat Omega_2, arma::vec alpha_1, arma::vec alpha_2);
+RcppExport SEXP _MPSK_KL(SEXP xi_1SEXP, SEXP xi_2SEXP, SEXP Omega_1SEXP, SEXP Omega_2SEXP, SEXP alpha_1SEXP, SEXP alpha_2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec >::type xi_1(xi_1SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type xi_2(xi_2SEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Omega_1(Omega_1SEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Omega_2(Omega_2SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type alpha_1(alpha_1SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type alpha_2(alpha_2SEXP);
+    rcpp_result_gen = Rcpp::wrap(KL(xi_1, xi_2, Omega_1, Omega_2, alpha_1, alpha_2));
+    return rcpp_result_gen;
+END_RCPP
+}
 // relabel
 Rcpp::List relabel(const Rcpp::List res);
 RcppExport SEXP _MPSK_relabel(SEXP resSEXP) {
@@ -29,45 +96,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// calib
-Rcpp::List calib(arma::mat Y, arma::vec C, arma::mat Z, NumericVector mu_input, IntegerVector mu_dim, NumericVector mu0_input, IntegerVector mu0_dim, arma::mat S);
-RcppExport SEXP _MPSK_calib(SEXP YSEXP, SEXP CSEXP, SEXP ZSEXP, SEXP mu_inputSEXP, SEXP mu_dimSEXP, SEXP mu0_inputSEXP, SEXP mu0_dimSEXP, SEXP SSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type C(CSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type Z(ZSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type mu_input(mu_inputSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type mu_dim(mu_dimSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type mu0_input(mu0_inputSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type mu0_dim(mu0_dimSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP);
-    rcpp_result_gen = Rcpp::wrap(calib(Y, C, Z, mu_input, mu_dim, mu0_input, mu0_dim, S));
-    return rcpp_result_gen;
-END_RCPP
-}
-// perturbedSNcpp
-Rcpp::List perturbedSNcpp(arma::mat Y, arma::uvec C, Rcpp::List prior, Rcpp::List pmc, Rcpp::List state);
-RcppExport SEXP _MPSK_perturbedSNcpp(SEXP YSEXP, SEXP CSEXP, SEXP priorSEXP, SEXP pmcSEXP, SEXP stateSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type C(CSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type prior(priorSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type pmc(pmcSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type state(stateSEXP);
-    rcpp_result_gen = Rcpp::wrap(perturbedSNcpp(Y, C, prior, pmc, state));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_MPSK_hungarian_cc", (DL_FUNC) &_MPSK_hungarian_cc, 1},
+    {"_MPSK_calib", (DL_FUNC) &_MPSK_calib, 7},
+    {"_MPSK_calibNoDist", (DL_FUNC) &_MPSK_calibNoDist, 7},
+    {"_MPSK_perturbedSNcpp", (DL_FUNC) &_MPSK_perturbedSNcpp, 7},
+    {"_MPSK_KL", (DL_FUNC) &_MPSK_KL, 6},
     {"_MPSK_relabel", (DL_FUNC) &_MPSK_relabel, 1},
-    {"_MPSK_calib", (DL_FUNC) &_MPSK_calib, 8},
-    {"_MPSK_perturbedSNcpp", (DL_FUNC) &_MPSK_perturbedSNcpp, 5},
     {NULL, NULL, 0}
 };
 
