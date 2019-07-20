@@ -54,8 +54,8 @@ mpsk = function(Y, C, prior = NULL, pmc = NULL, state = NULL)
   
   
   if(is.null(pmc)) {
-    pmc = list(npart = 100, nburn = 5000, nsave = 1000, nskip = 1, 
-               ndisplay = 1000)
+    pmc = list(npart = 10, nburn = 1000, nsave = 1000, nskip = 1, 
+               ndisplay = 500)
   } else {
     if(is.null(pmc$npart))
       pmc$npart = 100
