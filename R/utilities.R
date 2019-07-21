@@ -35,6 +35,7 @@ calibrateNoDist <- function(x)
 }
 
 relabelChain = function(res) {
+  res$chain$t = res$chain$t - 1
   relabeled_chain = relabel(res)
   res$chain = relabeled_chain 
   res
