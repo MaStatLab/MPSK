@@ -9,7 +9,7 @@ using namespace Rcpp;
 
 // hungarian_cc
 arma::umat hungarian_cc(arma::mat cost);
-RcppExport SEXP _MPSK_hungarian_cc(SEXP costSEXP) {
+RcppExport SEXP _COMIX_hungarian_cc(SEXP costSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // calib
 Rcpp::List calib(arma::mat Y, arma::vec C, arma::mat Z, NumericVector mu_input, IntegerVector mu_dim, NumericVector mu0_input, IntegerVector mu0_dim);
-RcppExport SEXP _MPSK_calib(SEXP YSEXP, SEXP CSEXP, SEXP ZSEXP, SEXP mu_inputSEXP, SEXP mu_dimSEXP, SEXP mu0_inputSEXP, SEXP mu0_dimSEXP) {
+RcppExport SEXP _COMIX_calib(SEXP YSEXP, SEXP CSEXP, SEXP ZSEXP, SEXP mu_inputSEXP, SEXP mu_dimSEXP, SEXP mu0_inputSEXP, SEXP mu0_dimSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -37,7 +37,7 @@ END_RCPP
 }
 // calibNoDist
 Rcpp::List calibNoDist(arma::mat Y, arma::vec C, arma::mat Z, NumericVector mu_input, IntegerVector mu_dim, NumericVector mu0_input, IntegerVector mu0_dim);
-RcppExport SEXP _MPSK_calibNoDist(SEXP YSEXP, SEXP CSEXP, SEXP ZSEXP, SEXP mu_inputSEXP, SEXP mu_dimSEXP, SEXP mu0_inputSEXP, SEXP mu0_dimSEXP) {
+RcppExport SEXP _COMIX_calibNoDist(SEXP YSEXP, SEXP CSEXP, SEXP ZSEXP, SEXP mu_inputSEXP, SEXP mu_dimSEXP, SEXP mu0_inputSEXP, SEXP mu0_dimSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -54,7 +54,7 @@ END_RCPP
 }
 // perturbedSNcpp
 Rcpp::List perturbedSNcpp(arma::mat Y, arma::uvec C, Rcpp::List prior, Rcpp::List pmc, Rcpp::List state, Rcpp::List initParticles, bool init);
-RcppExport SEXP _MPSK_perturbedSNcpp(SEXP YSEXP, SEXP CSEXP, SEXP priorSEXP, SEXP pmcSEXP, SEXP stateSEXP, SEXP initParticlesSEXP, SEXP initSEXP) {
+RcppExport SEXP _COMIX_perturbedSNcpp(SEXP YSEXP, SEXP CSEXP, SEXP priorSEXP, SEXP pmcSEXP, SEXP stateSEXP, SEXP initParticlesSEXP, SEXP initSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -71,7 +71,7 @@ END_RCPP
 }
 // KL
 double KL(arma::vec xi_1, arma::vec xi_2, arma::mat Omega_1, arma::mat Omega_2, arma::vec alpha_1, arma::vec alpha_2);
-RcppExport SEXP _MPSK_KL(SEXP xi_1SEXP, SEXP xi_2SEXP, SEXP Omega_1SEXP, SEXP Omega_2SEXP, SEXP alpha_1SEXP, SEXP alpha_2SEXP) {
+RcppExport SEXP _COMIX_KL(SEXP xi_1SEXP, SEXP xi_2SEXP, SEXP Omega_1SEXP, SEXP Omega_2SEXP, SEXP alpha_1SEXP, SEXP alpha_2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -87,7 +87,7 @@ END_RCPP
 }
 // relabel
 Rcpp::List relabel(const Rcpp::List res);
-RcppExport SEXP _MPSK_relabel(SEXP resSEXP) {
+RcppExport SEXP _COMIX_relabel(SEXP resSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -98,16 +98,16 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_MPSK_hungarian_cc", (DL_FUNC) &_MPSK_hungarian_cc, 1},
-    {"_MPSK_calib", (DL_FUNC) &_MPSK_calib, 7},
-    {"_MPSK_calibNoDist", (DL_FUNC) &_MPSK_calibNoDist, 7},
-    {"_MPSK_perturbedSNcpp", (DL_FUNC) &_MPSK_perturbedSNcpp, 7},
-    {"_MPSK_KL", (DL_FUNC) &_MPSK_KL, 6},
-    {"_MPSK_relabel", (DL_FUNC) &_MPSK_relabel, 1},
+    {"_COMIX_hungarian_cc", (DL_FUNC) &_COMIX_hungarian_cc, 1},
+    {"_COMIX_calib", (DL_FUNC) &_COMIX_calib, 7},
+    {"_COMIX_calibNoDist", (DL_FUNC) &_COMIX_calibNoDist, 7},
+    {"_COMIX_perturbedSNcpp", (DL_FUNC) &_COMIX_perturbedSNcpp, 7},
+    {"_COMIX_KL", (DL_FUNC) &_COMIX_KL, 6},
+    {"_COMIX_relabel", (DL_FUNC) &_COMIX_relabel, 1},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_MPSK(DllInfo *dll) {
+RcppExport void R_init_COMIX(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
